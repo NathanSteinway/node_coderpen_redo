@@ -6,8 +6,11 @@ const fs = require('fs');
 // Format is <tag> <timestamp> <severity> <message>
 
 // To do:
-    // 1) E, W, I, and so on should be displayed as their full names.
-    // 2) Each line should be ordered by it's timestamp.
+  
+    // EDIT: I swapped #1 and #2. When something needs to be sorted, I should really handle that first to avoid headaches I guess.
+    
+    // 1) Each line should be ordered by it's timestamp.
+    // 2) E, W, I, T, and so on should be displayed as their full names.
     // 3) If severity is over 15, display "Catastrophic"
 
 // Uses FileSystem node module to read data.txt then stuff it into data arg in it's callback function
@@ -21,20 +24,25 @@ fs.readFile('data.txt', 'utf8', (err, data) => {
         // Uses .split('\n') to split 'em up by line
         const dataArr = data.split('\n');
 
-            // My set of data has E, W, I, and invalid strings. I'd like to use a conditional statement to handle them, but I ran into a problem.
-            // If I use an conditional statement to display the full tag names then it makes grabbing the other info annoying because the tag names are different sizes.
-            // In order to avoid dataArr[i] index length shenanigans I should split the info into bits and pieces to be handled separately (maybe)
+        // .split is a string method so I need to loop through dataArr to further mess w/ the data
 
-        // loops through dataArr
-        for (let i = 0; i < dataArr.length; i++) {
-        
-            // logs the split dataArr[i] in console
-            console.log(dataArr[i].split(' '))
+        for (var i = 0; i < dataArr.length; i++) {
+            // The data in each line needs to be split up, so that should be done first.
+            let newData = dataArr[i].split(' ')
+            
+            // These lines need to be sorted by the timestamp, so that should be done next.
+            // Before the sorting was messing up because I hadn't converted these to integers.
+            // This way I can target each index AND give them a name which will hopefully make things easier.
+            let timestamp = parseInt(newData[1])
+            let severity = parseInt(newData[2])
+
+            // Here I created a new array using the original values for <tag> and <message> and new values for the <timestamp> and <severity>
+            let convertedData = [newData[0], timestamp, severity, newData[3]]
+            
+            console.log(convertedData)
         }
-        
 
-
-    }
+        }
 
     catch (err) {
         // not working w/ json so replaced msg here to avoid confusing myself

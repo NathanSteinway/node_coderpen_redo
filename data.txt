@@ -1,10 +1,8 @@
 E 145 11 uhoh
-a;lskdja;sd
-I 145 13 thats
-W 145 12 not
+T 160 13 thats
+T 110 12 not
 I 145 15 good
 E 145 16 uhoh
-qerqwpufyih
-W 145 18 thats
-W 145 12 not
-I 145 13 good
+W 130 18 thats
+W 245 12 not
+I 354 13 good
