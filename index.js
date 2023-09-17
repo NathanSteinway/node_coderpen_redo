@@ -42,11 +42,14 @@ fs.readFile('data.txt', 'utf8', (err, data) => {
                 // Here I created a new array using the original values for <tag> and <message> and new values for the <timestamp> and <severity>
                 var convertedData = [newData[0], timestamp, severity, newData[3]]
                 
+                // shove convertedData into an empty array defined outside of this for loop's scope
                 sortedDataArr.push(convertedData)
             }
-
-            console.log(sortedDataArr)
-        }
+        
+        // thank you based Bro Code @ Youtube
+        sortedDataArr.sort((a,b) => a[1] - b[1])
+        console.log(sortedDataArr)
+    }
 
     catch (err) {
         // not working w/ json so replaced msg here to avoid confusing myself
