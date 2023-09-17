@@ -8,7 +8,7 @@ const fs = require('fs');
 // To do:
   
     // EDIT: I swapped #1 and #2. When something needs to be sorted, I should really handle that first to avoid headaches I guess.
-    
+
     // 1) Each line should be ordered by it's timestamp.
     // 2) E, W, I, T, and so on should be displayed as their full names.
     // 3) If severity is over 15, display "Catastrophic"
@@ -24,24 +24,28 @@ fs.readFile('data.txt', 'utf8', (err, data) => {
         // Uses .split('\n') to split 'em up by line
         const dataArr = data.split('\n');
 
+        // gonna need this to pull it out of the for loop
+        sortedDataArr = [];
+
         // .split is a string method so I need to loop through dataArr to further mess w/ the data
 
-        for (var i = 0; i < dataArr.length; i++) {
-            // The data in each line needs to be split up, so that should be done first.
-            let newData = dataArr[i].split(' ')
-            
-            // These lines need to be sorted by the timestamp, so that should be done next.
-            // Before the sorting was messing up because I hadn't converted these to integers.
-            // This way I can target each index AND give them a name which will hopefully make things easier.
-            let timestamp = parseInt(newData[1])
-            let severity = parseInt(newData[2])
+            for (var i = 0; i < dataArr.length; i++) {
+                // The data in each line needs to be split up, so that should be done first.
+                var newData = dataArr[i].split(' ')
+                
+                // These lines need to be sorted by the timestamp, so that should be done next.
+                // Before the sorting was messing up because I hadn't converted these to integers.
+                // This way I can target each index AND give them a name which will hopefully make things easier.
+                let timestamp = parseInt(newData[1])
+                let severity = parseInt(newData[2])
 
-            // Here I created a new array using the original values for <tag> and <message> and new values for the <timestamp> and <severity>
-            let convertedData = [newData[0], timestamp, severity, newData[3]]
-            
-            console.log(convertedData)
-        }
+                // Here I created a new array using the original values for <tag> and <message> and new values for the <timestamp> and <severity>
+                var convertedData = [newData[0], timestamp, severity, newData[3]]
+                
+                sortedDataArr.push(convertedData)
+            }
 
+            console.log(sortedDataArr)
         }
 
     catch (err) {
