@@ -16,7 +16,10 @@ const fs = require('fs');
 // Uses FileSystem node module to read data.txt then stuff it into data arg in it's callback function
 fs.readFile('data.txt', 'utf8', (err, data) => {
 
-    // removed if (err) statement from nodejs documentation, It doesn't seem necessary
+    if (err) {
+        console.error(err)
+        return console.log("Abort, abort!")
+    }
 
     try {
 
@@ -34,7 +37,7 @@ fs.readFile('data.txt', 'utf8', (err, data) => {
             for (var i = 0; i < dataArr.length; i++) {
                 // The data in each line needs to be split up, so that should be done first.
                 var newData = dataArr[i].split(' ')
-                
+
                 // These lines need to be sorted by the timestamp, so that should be done next.
                 // Before the sorting was messing up because I hadn't converted these to integers.
                 // This way I can target each index AND give them a name which will hopefully make things easier.
@@ -74,9 +77,21 @@ fs.readFile('data.txt', 'utf8', (err, data) => {
                     sortedDataArr[i][0] = "Info"
                 }
                 else {
+                    
                     // do nothing for now
+                    
                 }
                 
+            }
+
+            // HANDLES SEVERITY
+            for (let i = 0; i < sortedDataArr.length; i++) {
+                if (sortedDataArr[i][2] > 15) {
+                    sortedDataArr[i][2] = "CATASTROPHIC"
+                }
+                else {
+                    // do nothing for now
+                }
             }
 
             console.log(sortedDataArr)
