@@ -29,6 +29,8 @@ fs.readFile('data.txt', 'utf8', (err, data) => {
 
         // .split is a string method so I need to loop through dataArr to further mess w/ the data
 
+            // HANDLES SORTING BY TIMESTAMP
+
             for (var i = 0; i < dataArr.length; i++) {
                 // The data in each line needs to be split up, so that should be done first.
                 var newData = dataArr[i].split(' ')
@@ -51,37 +53,29 @@ fs.readFile('data.txt', 'utf8', (err, data) => {
         
             // Now that the array is sorted it's time to handle the <tag> names
             // Loop through newly sorted array
+
+            // HANDLES TAG NAMES
             for (var i = 0; i < sortedDataArr.length; i++) {
 
-                // grab the tag
-                var tag = sortedDataArr[i][0]
-
                 // conditional statement to handle the different cases
-                // .replace is a string method, so trying to shove it into an array is proving a bit confusing
-                    // I think the issue is that sortedDataArr[i][0] is a string, so trying to splice in it's replacement won't work since that's an array method.
-                    // But I do it how I tried the first time (with .replace) then it only changes the tag within this for loop's scope. 
-                        // Since it's a string w/ a string method attached I can't use an array method to (update) sortedDataArr
+                // EDIT: I'm not sure what I did wrong.
+                    // Using the raw reference seems to have fixed it? I'm scared
 
-                if (tag === "E") {
-                    fullName=tag.replace("E", "Error")
-                    tag = fullName
+                if (sortedDataArr[i].includes("E")) {
+                    sortedDataArr[i][0] = "Error"
                 }
-                else if (tag === "W") {
-                    fullName=tag.replace("W", "Warn")
-                    tag = fullName
+                else if (sortedDataArr[i].includes("W")) {
+                    sortedDataArr[i][0] = "Warn"
                 }
-                else if (tag === "I") {
-                    fullName = tag.replace("I", "Info")
-                    tag = fullName
+                else if (sortedDataArr[i].includes("T")) {
+                    sortedDataArr[i][0] = "Trace"
                 }
-                else if (tag === "T") {
-                    fullName = tag.replace("T", "Trace")
-                    tag = fullName
+                else if (sortedDataArr[i].includes("I")) {
+                    sortedDataArr[i][0] = "Info"
                 }
                 else {
-                    // do nothing
+                    // do nothing for now
                 }
-
                 
             }
 
