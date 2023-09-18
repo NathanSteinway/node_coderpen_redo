@@ -54,11 +54,16 @@ fs.readFile('data.txt', 'utf8', (err, data) => {
             for (var i = 0; i < sortedDataArr.length; i++) {
 
                 // grab the tag
-                let tag = sortedDataArr[i][0]
+                var tag = sortedDataArr[i][0]
 
                 // conditional statement to handle the different cases
+                // .replace is a string method, so trying to shove it into an array is proving a bit confusing
+                    // I think the issue is that sortedDataArr[i][0] is a string, so trying to splice in it's replacement won't work since that's an array method.
+                    // But I do it how I tried the first time (with .replace) then it only changes the tag within this for loop's scope. 
+                        // Since it's a string w/ a string method attached I can't use an array method to (update) sortedDataArr
+
                 if (tag === "E") {
-                    fullName = tag.replace("E", "Error")
+                    fullName=tag.replace("E", "Error")
                     tag = fullName
                 }
                 else if (tag === "W") {
@@ -76,7 +81,11 @@ fs.readFile('data.txt', 'utf8', (err, data) => {
                 else {
                     // do nothing
                 }
+
+                
             }
+
+            console.log(sortedDataArr)
     }
 
     catch (err) {
